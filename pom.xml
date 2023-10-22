@@ -30,6 +30,10 @@
 			<groupId>com.vaadin</groupId>
 			<artifactId>vaadin-spring-boot-starter</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin-dev-server</artifactId>
+		</dependency>
 
 		<!-- H2 Database (for in-memory database) -->
 		<dependency>
