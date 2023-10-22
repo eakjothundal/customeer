@@ -43,4 +43,5 @@ public class Customer {
     }
 
     // Additional methods (equals, hashCode, toString, etc.) can be added as needed
+
 }
