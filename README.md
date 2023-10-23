@@ -49,6 +49,12 @@ Customeer is a robust and intuitive CRM web application designed to streamline t
 2. **Add Customers**: Click on the "Add Customer" button and fill in the required details.
 3. **Update/Delete Customers**: Update customer details or delete customer record.
 
+## Future Additions
+
+- [ ] Persistent Database Integration: Transition from an in-memory database to a persistent database solution for long-term data storage and better scalability.
+- [ ] Confirmation/Error Modals: Implement modals to provide feedback and confirmation messages for user actions, ensuring a better user experience.
+
+
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
