@@ -5,12 +5,15 @@ import com.customeer.customeer.services.CustomerService;
 import com.customeer.customeer.ui.components.CustomerForm;
 import com.customeer.customeer.ui.components.CustomerGrid;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.dependency.CssImport;
+import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Route("")
+@CssImport("/styles/CustomerViewStyles.css")
 public class CustomerView extends VerticalLayout {
 
     private final CustomerService customerService;
@@ -22,6 +25,9 @@ public class CustomerView extends VerticalLayout {
     public CustomerView(CustomerService customerService) {
         this.customerService = customerService;
 
+        addClassName("centered-content");
+
+        addHeader();
         addAddCustomerButton();
         updateList();
         grid.addComponentColumn(this::createButtonsLayout).setHeader("Actions");
@@ -65,11 +71,14 @@ public class CustomerView extends VerticalLayout {
      */
     private void showUpdateForm(Customer customer) {
         currentForm = new CustomerForm(
-                new Button("Save", event -> saveUpdatedCustomer(customer)),
-                new Button("Cancel", event -> removeForm())
+                new Button("Save", event -> {
+                    saveUpdatedCustomer(customer);
+                    currentForm.close();
+                }),
+                new Button("Cancel", event -> currentForm.close())
         );
         currentForm.setCustomer(customer);
-        add(currentForm);
+        currentForm.open();
     }
 
     /**
@@ -94,12 +103,33 @@ public class CustomerView extends VerticalLayout {
     private void addAddCustomerButton() {
         add(new Button("Add Customer", click -> {
             currentForm = new CustomerForm(
-                    new Button("Save", event -> saveNewCustomer()),
-                    new Button("Cancel", event -> removeForm())
+                    new Button("Save", event -> {
+                        saveNewCustomer();
+                        currentForm.close();
+                    }),
+                    new Button("Cancel", event -> currentForm.close())
             );
-            add(currentForm);
+            currentForm.open();
         }));
     }
+
+    private void addHeader() {
+        // Create an Image component for the logo.
+        Image logo = new Image("/images/logo.png", "Customeer Logo");
+        logo.setWidth("300px");
+        logo.setHeight("300px");
+
+        // Create a horizontal layout for the logo and set its width to 100% to ensure it spans the full width.
+        HorizontalLayout logoLayout = new HorizontalLayout(logo);
+        logoLayout.setWidth("100%");
+        logoLayout.setAlignItems(Alignment.CENTER); // Vertically center the logo
+        logoLayout.setJustifyContentMode(JustifyContentMode.CENTER); // Horizontally center the logo
+
+        // Add the logo layout to the top of the main layout.
+        add(logoLayout);
+    }
+
+
 
     /**
      * Saves the new customer data entered in the form and refreshes the grid.
@@ -117,7 +147,7 @@ public class CustomerView extends VerticalLayout {
      */
     private void removeForm() {
         if (currentForm != null) {
-            remove(currentForm);
+            currentForm.close();
         }
     }
 }

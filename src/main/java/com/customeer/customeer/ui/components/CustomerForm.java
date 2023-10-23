@@ -2,11 +2,12 @@ package com.customeer.customeer.ui.components;
 
 import com.customeer.customeer.models.Customer;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 
-public class CustomerForm extends FormLayout {
+public class CustomerForm extends Dialog {
 
     private final TextField nameField = new TextField("Name");
     private final TextField emailField = new TextField("Email");
@@ -14,8 +15,17 @@ public class CustomerForm extends FormLayout {
 
     public CustomerForm(Button saveButton, Button cancelButton) {
 
-        setColspan(notesField, 2);
-        add(nameField, emailField, notesField, saveButton, cancelButton);
+        FormLayout layout = new FormLayout();
+        layout.setColspan(notesField, 2);
+        layout.add(nameField, emailField, notesField, saveButton, cancelButton);
+        add(layout);  // Add the form layout to the dialog
+
+        saveButton.addClickListener(e -> {
+            // Handle save action here
+            close();  // Close the dialog after save
+        });
+
+        cancelButton.addClickListener(e -> close());  // Close the dialog without saving
     }
 
     public void setCustomer(Customer customer) {
