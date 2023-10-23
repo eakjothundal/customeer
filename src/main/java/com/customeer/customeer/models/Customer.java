@@ -1,53 +1,43 @@
 package com.customeer.customeer.models;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.time.LocalDateTime;
-
+/**
+ * Represents a customer in the system.
+ */
 @Entity
+@Getter  // Lombok annotation to generate getters
+@Setter  // Lombok annotation to generate setters
 public class Customer {
 
+    /** Unique identifier for the customer */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    /** Full name of the customer */
     private String name;
+
+    /** Email address of the customer */
     private String email;
-    private LocalDateTime addedDate;
+
+    /** Additional notes or comments related to the customer */
     private String notes;
 
-   // Getter and Setter for notes
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
+    public Customer(String name, String email, String notes) {
+        this.name = name;
+        this.email = email;
         this.notes = notes;
     }
 
-    // Getter and Setter for id
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    // Getter and Setter for name
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    // Getter and Setter for email
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public Customer() {
+        return;
     }
 }

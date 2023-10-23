@@ -42,6 +42,13 @@
 			<groupId>com.vaadin</groupId>
 			<artifactId>vaadin-dev-server</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.22</version>
+			<scope>provided</scope>
+		</dependency>
+
 
 		<!-- H2 Database (for in-memory database) -->
 		<dependency>
