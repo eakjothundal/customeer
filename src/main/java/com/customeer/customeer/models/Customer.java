@@ -1,9 +1,8 @@
 package com.customeer.customeer.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
 
 @Entity
 public class Customer {
@@ -13,7 +12,17 @@ public class Customer {
     private Long id;
     private String name;
     private String email;
-    // other fields as required
+    private LocalDateTime addedDate;
+    private String notes;
+
+   // Getter and Setter for notes
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
 
     // Getter and Setter for id
     public Long getId() {
@@ -41,7 +50,4 @@ public class Customer {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    // Additional methods (equals, hashCode, toString, etc.) can be added as needed
-
 }

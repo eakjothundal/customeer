@@ -7,18 +7,20 @@ import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@Route("customers")
+@Route("")
 public class CustomerView extends VerticalLayout {
 
     private final CustomerService customerService;
 
-    private Grid<Customer> grid = new Grid<>(Customer.class);
+    private Grid<Customer> grid = new Grid<>();
     private TextField nameField = new TextField("Name");
     private TextField emailField = new TextField("Email");
+    private TextArea notesField = new TextArea("Notes");
     private Button saveButton;
     private Button cancelButton;
     private FormLayout formLayout;
@@ -27,9 +29,13 @@ public class CustomerView extends VerticalLayout {
     public CustomerView(CustomerService customerService) {
         this.customerService = customerService;
 
+        grid.addColumn(Customer::getId).setHeader("ID");
+        grid.addColumn(Customer::getName).setHeader("Name");
+        grid.addColumn(Customer::getEmail).setHeader("Email");
+        grid.addColumn(Customer::getNotes).setHeader("Notes");
         // Define the delete and update buttons column
-        grid.addComponentColumn(customer -> createButtonsLayout(customer))
-                .setHeader("Actions");
+        grid.addComponentColumn(customer -> createButtonsLayout(customer)).setHeader("Actions");
+
 
         add(new Button("Add Customer", click -> addCustomer()));
         updateList();
@@ -43,25 +49,31 @@ public class CustomerView extends VerticalLayout {
     private void initFormLayout() {
         saveButton = new Button("Save");
         cancelButton = new Button("Cancel");
-        formLayout = new FormLayout(nameField, emailField, saveButton, cancelButton);
+        formLayout = new FormLayout(nameField, emailField, notesField, saveButton, cancelButton);
+        formLayout.setColspan(notesField, 2);
     }
 
     public void addCustomer() {
         initFormLayout();
+        notesField.setWidthFull();
 
         saveButton.addClickListener(event -> {
             Customer newCustomer = new Customer();
             newCustomer.setName(nameField.getValue());
             newCustomer.setEmail(emailField.getValue());
+            newCustomer.setNotes(notesField.getValue());
+
             customerService.save(newCustomer);
-            nameField.clear();  // Clear the name field
-            emailField.clear();  // Clear the email field
+            nameField.clear();
+            emailField.clear();
+            notesField.clear();
+
             updateList();
-            remove(formLayout);  // Remove the form after saving
+            remove(formLayout);
         });
 
         cancelButton.addClickListener(event -> {
-            remove(formLayout);  // Remove the form without saving
+            remove(formLayout);
         });
 
         // Open the form to input customer details
@@ -89,15 +101,20 @@ public class CustomerView extends VerticalLayout {
         // Pre-fill the form fields with the customer's data
         nameField.setValue(customer.getName());
         emailField.setValue(customer.getEmail());
+        notesField.setValue(customer.getNotes());
 
         saveButton.addClickListener(event -> {
             customer.setName(nameField.getValue());
             customer.setEmail(emailField.getValue());
+            customer.setNotes(notesField.getValue());
+
             customerService.save(customer);
             nameField.clear();
             emailField.clear();
+            notesField.clear();
+
             updateList();
-            remove(formLayout);  // Remove the form after saving
+            remove(formLayout);
         });
 
         add(formLayout);
