@@ -1,6 +1,8 @@
 # Customeer: Customer Relationship Management (CRM) Web Application
 
-<img src="https://github.com/eakjothundal/customeer/assets/44451960/bbb674a0-c47e-4e66-8640-9803e23f04c3" alt="DALL·E 2023-10-22 17 30 18 - Vector design of a minimalist logo for 'customeer'. The 'o' in customeer is replaced by a stylized icon that combines a shopping cart and a handshake." width="250" height="250">
+<p align="center">
+  <img src="https://github.com/eakjothundal/customeer/assets/44451960/bbb674a0-c47e-4e66-8640-9803e23f04c3" alt="DALL·E 2023-10-22 17 30 18 - Vector design of a minimalist logo for 'customeer'. The 'o' in customeer is replaced by a stylized icon that combines a shopping cart and a handshake." width="250" height="250">
+</p>
 
 
 
