@@ -2,13 +2,11 @@ package com.customeer.customeer.ui;
 
 import com.customeer.customeer.models.Customer;
 import com.customeer.customeer.services.CustomerService;
+import com.customeer.customeer.ui.components.CustomerForm;
+import com.customeer.customeer.ui.components.CustomerGrid;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.formlayout.FormLayout;
-import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.TextArea;
-import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,31 +14,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class CustomerView extends VerticalLayout {
 
     private final CustomerService customerService;
-    private final Grid<Customer> grid = new Grid<>();
-    private final TextField nameField = new TextField("Name");
-    private final TextField emailField = new TextField("Email");
-    private final TextArea notesField = new TextArea("Notes");
+    private final CustomerGrid grid = new CustomerGrid();
+    private CustomerForm currentForm;
 
     // Constructor for dependency injection
     @Autowired
     public CustomerView(CustomerService customerService) {
         this.customerService = customerService;
 
-        configureGrid();
         addAddCustomerButton();
         updateList();
-        add(grid);
-    }
-
-    /**
-     * Configures the grid columns and actions.
-     */
-    private void configureGrid() {
-        grid.addColumn(Customer::getId).setHeader("ID");
-        grid.addColumn(Customer::getName).setHeader("Name");
-        grid.addColumn(Customer::getEmail).setHeader("Email");
-        grid.addColumn(Customer::getNotes).setHeader("Notes");
         grid.addComponentColumn(this::createButtonsLayout).setHeader("Actions");
+        add(grid);
     }
 
     /**
@@ -79,12 +64,12 @@ public class CustomerView extends VerticalLayout {
      * @param customer the customer to update
      */
     private void showUpdateForm(Customer customer) {
-        FormLayout formLayout = createFormLayout(
+        currentForm = new CustomerForm(
                 new Button("Save", event -> saveUpdatedCustomer(customer)),
                 new Button("Cancel", event -> removeForm())
         );
-        setFieldValues(customer);
-        add(formLayout);
+        currentForm.setCustomer(customer);
+        add(currentForm);
     }
 
     /**
@@ -93,24 +78,14 @@ public class CustomerView extends VerticalLayout {
      * @param customer the customer to update
      */
     private void saveUpdatedCustomer(Customer customer) {
-        customer.setName(nameField.getValue());
-        customer.setEmail(emailField.getValue());
-        customer.setNotes(notesField.getValue());
+        Customer updatedCustomer = currentForm.getCustomer();
+        customer.setName(updatedCustomer.getName());
+        customer.setEmail(updatedCustomer.getEmail());
+        customer.setNotes(updatedCustomer.getNotes());
         customerService.save(customer);
-        clearFields();
+        currentForm.clearFields();
         updateList();
         removeForm();
-    }
-
-    /**
-     * Sets the form fields with the values from the given customer.
-     *
-     * @param customer the customer whose data is to be set in the form
-     */
-    private void setFieldValues(Customer customer) {
-        nameField.setValue(customer.getName());
-        emailField.setValue(customer.getEmail());
-        notesField.setValue(customer.getNotes());
     }
 
     /**
@@ -118,11 +93,11 @@ public class CustomerView extends VerticalLayout {
      */
     private void addAddCustomerButton() {
         add(new Button("Add Customer", click -> {
-            FormLayout formLayout = createFormLayout(
+            currentForm = new CustomerForm(
                     new Button("Save", event -> saveNewCustomer()),
                     new Button("Cancel", event -> removeForm())
             );
-            add(formLayout);
+            add(currentForm);
         }));
     }
 
@@ -130,39 +105,19 @@ public class CustomerView extends VerticalLayout {
      * Saves the new customer data entered in the form and refreshes the grid.
      */
     private void saveNewCustomer() {
-        Customer newCustomer = new Customer(nameField.getValue(), emailField.getValue(), notesField.getValue());
+        Customer newCustomer = currentForm.getCustomer();
         customerService.save(newCustomer);
-        clearFields();
+        currentForm.clearFields();
         updateList();
         removeForm();
-    }
-
-    /**
-     * Creates a form layout for entering customer data.
-     *
-     * @param saveButton   the button to save the customer data
-     * @param cancelButton the button to cancel and close the form
-     * @return the form layout
-     */
-    private FormLayout createFormLayout(Button saveButton, Button cancelButton) {
-        FormLayout formLayout = new FormLayout(nameField, emailField, notesField, saveButton, cancelButton);
-        formLayout.setColspan(notesField, 2);
-        return formLayout;
-    }
-
-    /**
-     * Clears all the input fields in the form.
-     */
-    private void clearFields() {
-        nameField.clear();
-        emailField.clear();
-        notesField.clear();
     }
 
     /**
      * Removes the form from the view.
      */
     private void removeForm() {
-        remove(nameField, emailField, notesField);
+        if (currentForm != null) {
+            remove(currentForm);
+        }
     }
 }
