@@ -1,7 +1,11 @@
 # Customeer: Customer Relationship Management (CRM) Web Application
 
-![Customeer Logo](path_to_logo.png) 
-*Replace `path_to_logo.png` with the path to your logo if you have one.*
+<p align="center">
+  <img src="https://github.com/eakjothundal/customeer/assets/44451960/bbb674a0-c47e-4e66-8640-9803e23f04c3" alt="DALL·E 2023-10-22 17 30 18 - Vector design of a minimalist logo for 'customeer'. The 'o' in customeer is replaced by a stylized icon that combines a shopping cart and a handshake." width="250" height="250">
+</p>
+
+
+
 
 Customeer is a robust and intuitive CRM web application designed to streamline the management of customer data. Built using modern Java technologies, Customeer offers seamless CRUD operations, ensuring that businesses can efficiently track, modify, and access client information.
 
@@ -43,7 +47,7 @@ Customeer is a robust and intuitive CRM web application designed to streamline t
 
 1. **View Customers**: Navigate to the main page to view a list of all customers.
 2. **Add Customers**: Click on the "Add Customer" button and fill in the required details.
-3. **Update/Delete Customers**: *Future feature to be implemented.*
+3. **Update/Delete Customers**: Update customer details or delete customer record.
 
 ## License
 
