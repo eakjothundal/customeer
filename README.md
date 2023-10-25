@@ -19,7 +19,7 @@ Customeer is a robust and intuitive CRM web application designed to streamline t
 ## Technologies Used
 
 - **Spring Boot**: For creating stand-alone, production-grade Spring-based applications.
-- **Vaadin**: For building modern web apps efficiently in plain Java without the need for frontend expertise.
+- **Vaadin**: For building modern web apps efficiently in plain Java.
 - **Spring Data JPA**: For easily implementing JPA-based repositories.
 - **H2 Database**: An in-memory database for development purposes.
 - **JUnit 5**: The next generation testing framework for Java. Used for unit and integration testing.
