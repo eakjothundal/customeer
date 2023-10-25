@@ -25,6 +25,11 @@ Customeer is a robust and intuitive CRM web application designed to streamline t
 - **JUnit 5**: The next generation testing framework for Java. Used for unit and integration testing.
 - **Mockito**: A mocking framework for Java. Used in conjunction with JUnit for testing.
 
+## Demo
+
+https://github.com/eakjothundal/customeer/assets/44451960/185fc41f-d342-4b08-95c8-d731b3f2aa7d
+
+
 ## Getting Started
 
 ### Prerequisites
