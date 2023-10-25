@@ -22,6 +22,8 @@ Customeer is a robust and intuitive CRM web application designed to streamline t
 - **Vaadin**: For building modern web apps efficiently in plain Java without the need for frontend expertise.
 - **Spring Data JPA**: For easily implementing JPA-based repositories.
 - **H2 Database**: An in-memory database for development purposes.
+- **JUnit 5**: The next generation testing framework for Java. Used for unit and integration testing.
+- **Mockito**: A mocking framework for Java. Used in conjunction with JUnit for testing.
 
 ## Getting Started
 
